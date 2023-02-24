@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes)=>{
         productNames: DataTypes.STRING,
         totalPrice: DataTypes.STRING,
         payment: DataTypes.STRING,
-        paymentId: DataTypes.STRING,
- 
+        paymentId: DataTypes.STRING, 
     },
     {
         timestamps : false
