@@ -1,20 +1,22 @@
-const jwt = require('jsonwebtoken');
+const verifyToken = require('./middlewares/tokenVerfication.js')
 
-function verifyToken(req, res, next){
-    if(!req.headers.authorization){
-        return res.status(401).send('unauthorized request')
-    }
-    let token = req.headers.authorization.split(' ')[1]
-    if(token === 'null'){
-        return res.status(401).send('unauthorized request')
-    }
-    let payload = jwt.verify(token, 'userToken')
-    if(!payload){
-        return res.status(401).send('unauthorized request')
-    }
-    req.id = payload.id
-    next()
-}
+
+
+// function verifyToken(req, res, next){
+//     if(!req.headers.authorization){
+//         return res.status(401).send('unauthorized request')
+//     }
+//     let token = req.headers.authorization.split(' ')[1]
+//     if(token === 'null'){
+//         return res.status(401).send('unauthorized request')
+//     }
+//     let payload = jwt.verify(token, 'userToken')
+//     if(!payload){
+//         return res.status(401).send('unauthorized request')
+//     }
+//     req.id = payload.id
+//     next()
+// }
 
 const cartController = require('../controllers/cartController');
 
