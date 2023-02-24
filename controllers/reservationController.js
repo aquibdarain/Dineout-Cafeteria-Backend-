@@ -12,10 +12,28 @@ const add = async (req, res)=>{
         date: req.body.date
     }
 
-    let data = await createReservation.create(info)
-    res.status(200).json(data);
+    try {
+        let data = await createReservation.create(info)
+        res.status(200).json(data);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+const getBookingDetails = async (req,res)=>{
+    try {
+        let data = await createReservation.findAll({})
+        res.status(200).json(data)
+        
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 module.exports = {
-    add
+    add,
+    getBookingDetails
 }
