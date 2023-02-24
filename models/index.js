@@ -4,8 +4,8 @@ const { Sequelize, DataTypes } = require('sequelize')
 
 const sequelize = new Sequelize(
     'food_order',
-     process.env.DB_USER,
-     process.env.DB_PASSWORD,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
         host: 'localhost',
         dialect: 'mysql',
@@ -18,6 +18,7 @@ sequelize.authenticate()
     .catch((error) => {
         console.log('error', error);
     })
+
 
 const db = {}
 
@@ -36,9 +37,14 @@ db.cart.belongsTo(db.user)
 
 db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
 
+db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
+
+db.cafeDetails = require('./cafeDetails')(sequelize, Sequelize, DataTypes);
+
 module.exports = db
 
 db.sequelize.sync({ force: false })
     .then(() => {
         console.log("yes re-sync");
     })
+    .catch()

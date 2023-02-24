@@ -4,6 +4,10 @@ const app = express();
 const port = process.env.APP_PORT;
 const cors = require('cors');
 
+// const initRoutes = require("../../Angular/Client cafe/src/routes/web");
+
+global.__basedir = __dirname;
+
 app.use(cors("*"))
 
 app.listen(port, () => {
@@ -30,5 +34,11 @@ app.use('/api', userRoutes)
 const orderRoutes = require('./routes/orderDetailsRoutes');
 app.use('/api', orderRoutes)
 
+<<<<<<< HEAD
+=======
+const CafeRoutes = require('./routes/cafeDetailsRoutes');
+app.use('/api', CafeRoutes)
+
+>>>>>>> cc1485ae11e8d227cbbb3a0fe77ab6ec1ad0c3d9
 
 
