@@ -34,11 +34,8 @@ app.use('/api', userRoutes)
 const orderRoutes = require('./routes/orderDetailsRoutes');
 app.use('/api', orderRoutes)
 
-<<<<<<< HEAD
-=======
 const CafeRoutes = require('./routes/cafeDetailsRoutes');
 app.use('/api', CafeRoutes)
 
->>>>>>> cc1485ae11e8d227cbbb3a0fe77ab6ec1ad0c3d9
 
 
