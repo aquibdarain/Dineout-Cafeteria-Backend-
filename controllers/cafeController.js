@@ -1,11 +1,12 @@
 const fs = require("fs");
 const db = require('../models/index');
+const { Op } = require("sequelize");
+
 
 const cafe = db.cafeDetails
 
 const addCafe = async (req, res) => {
     try {
-        // console.log(req.file);
 
         if (req.file == undefined) {
             return res.send(`You must select a file.`);
@@ -22,11 +23,13 @@ const addCafe = async (req, res) => {
                 createObj[key] = null;
             }
         }
-
+        if (req.params.id) {
+            createObj.userId = req.params.id
+        }
         if (req.file) {
             createObj.file = fs.readFileSync(__basedir + "/assets/uploads/" + req.file.filename);
         }
-        console.log(req.file.filename);
+        // console.log(req.file.filename);
         // const data = cafe.create({
         //     type: req.file.mimetype,
         //     name: req.file.originalname,
@@ -50,21 +53,84 @@ const addCafe = async (req, res) => {
     }
 }
 
-const getCafeDetails = async (req, res) => {
-    let data = cafe.findAll({})
+const getUnapprovedCafeDetails = async (req, res) => {
+    let data = cafe.findAll({
+        where:{
+            status: 'false'
+        }
+    })
     data.then(function (result) {
         const arr = result.map(cafeDetails)
         // console.log(arr);
-        res.status(200).json(arr);
+        res.status(200).send(arr);
     })
     function cafeDetails(cd) {
         // console.log(cd.dataValues);
         return { data: cd.dataValues }
     }
 }
+const getApprovedCafeDetails = async (req, res) => {
+    let data = cafe.findAll({
+        where:{
+            status: 'true'
+        }
+    })
+    data.then(function (result) {
+        const arr = result.map(cafeDetails)
+        // console.log(arr);
+        res.status(200).send(arr);
+    })
+    function cafeDetails(cd) {
+        // console.log(cd.dataValues);
+        return { data: cd.dataValues }
+    }
+}
+const getApprovedCafeDetailsById = async (req, res) => {
+    let data = cafe.findOne({
+        where:{
+            [Op.and]: [{id: req.params.id},{status: 'true'}]
+        }
+    })
+    data.then((d)=>{
+        res.send(d.dataValues)
+    })
+}
+
+
+const deleteCafe = async (req, res) => {
+    try {
+        let data = await cafe.destroy({ where: { id: req.params.id } });
+        res.send({
+            msg: "Cafe rejected successfully !!"
+        })
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const cafeApproval = async (req, res) => {
+    try {
+        let obj = {
+            status: 'true'
+        }
+        let data = await cafe.update(obj, { where: { id: req.params.id } });
+        res.send({
+            msg: "Cafe approved successfully !!"
+        })
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 module.exports = {
     addCafe,
-    getCafeDetails
+    getUnapprovedCafeDetails,
+    getApprovedCafeDetails,
+    deleteCafe,
+    cafeApproval,
+    getApprovedCafeDetailsById
+    
 }
 

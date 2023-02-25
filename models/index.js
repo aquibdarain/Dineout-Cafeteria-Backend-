@@ -29,17 +29,24 @@ db.reservation = require('./reservation')(sequelize, DataTypes);
 db.itemNo = require('./itemNo')(sequelize, DataTypes);
 db.cart = require('./cart')(sequelize, DataTypes);
 db.user = require('./user')(sequelize, DataTypes);
+db.cafeDetails = require('./cafeDetails')(sequelize, Sequelize, DataTypes);
 
 db.user.hasMany(db.cart, {
-    foreignKey: 'itemId'
+    foreignKey: 'userId'
 })
 db.cart.belongsTo(db.user)
 
-db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
+db.user.hasMany(db.cafeDetails, {
+    foreignKey: 'userId'
+})
+db.cafeDetails.belongsTo(db.user)
+
+
 
 db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
 
-db.cafeDetails = require('./cafeDetails')(sequelize, Sequelize, DataTypes);
+db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
+
 
 module.exports = db
 

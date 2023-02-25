@@ -10,12 +10,13 @@ const register = async (req, res) => {
         phone: req.body.phone,
         email: req.body.email,
         password: req.body.password,
+        role: req.body.role,
     }
     try {
         let data = await User.create(info)
         // res.status(200).json(data);
         if(data){
-            let payload = { subject: data.id }
+            let payload = { id: data.id, role: data.role }
             const token = jwt.sign(payload, process.env.JWT_SECRET)
     
             res.status(200).json({ token })
@@ -41,8 +42,9 @@ const login = async (req, res) => {
 
         if (req.query.email == data.dataValues.email) {
             if (req.query.password == data.dataValues.password) {
-                console.log(data.id);
-                let payload = { id: data.id }
+                // console.log(data.id);
+                // console.log(data.role);
+                let payload = { id: data.id, role: data.role }
                 const token = jwt.sign(payload, process.env.JWT_SECRET)
 
                 res.status(200).json({ token })
