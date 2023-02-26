@@ -10,10 +10,18 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         description: DataTypes.STRING,
         price: DataTypes.STRING,
         location: DataTypes.STRING,
+        status: DataTypes.STRING,
         file: {
             type: DataTypes.BLOB("long"),
         },
-
+        userId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'users',
+                key: 'id'
+            }
+        }
+        
 
     },
         {

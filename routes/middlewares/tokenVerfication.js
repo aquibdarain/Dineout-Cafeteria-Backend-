@@ -11,7 +11,7 @@ module.exports = function verifyToken(req, res, next){
     if(!payload){
         return res.status(401).send('unauthorized request')
     }
-    console.log(req.id);
+    // console.log(req.id);
     req.id = payload.id
     next()
 }

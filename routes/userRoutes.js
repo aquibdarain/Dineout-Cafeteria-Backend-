@@ -1,4 +1,4 @@
-const userID = require('./middlewares/userId.js')
+const userDetails = require('./middlewares/userDetails.js')
 
 const registerController = require('../controllers/userController');
 
@@ -8,7 +8,7 @@ router.post('/register',registerController.register)
 
 router.get('/login',registerController.login)
 
-router.get('/sendUserId',userID)
+router.get('/sendUserDetails',userDetails)
 
 
 module.exports = router
