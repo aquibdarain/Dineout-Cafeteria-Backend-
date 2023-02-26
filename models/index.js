@@ -50,7 +50,7 @@ db.orderDetails = require('./orderDetails')(sequelize, DataTypes);
 
 module.exports = db
 
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ force: true })
     .then(() => {
         console.log("yes re-sync");
     })
